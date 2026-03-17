@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>ERP Sustainable Shopping Experiment</title>
+
+        <!-- Google Fonts -->
+        <link
+            href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap"
+            rel="stylesheet"
+        />
+
+        <!-- jsPsych core -->
+        <script src="jspsych/jspsych.js"></script>
+
+        <!-- jsPsych plugins -->
+        <script src="jspsych/plugin-html-button-response.js"></script>
+        <script src="jspsych/plugin-survey-html-form.js"></script>
+
+        <!-- jsPsych CSS -->
+        <link rel="stylesheet" href="jspsych/jspsych.css" />
+
+        <!-- Your custom styling -->
+        <link rel="stylesheet" href="style.css" />
+
+        <style>
+            /* LSL status badge — fixed top-right, visible throughout experiment */
+            #lsl-status {
+                position: fixed;
+                top: 14px;
+                right: 18px;
+                z-index: 9999;
+                display: flex;
+                align-items: center;
+                gap: 7px;
+                font-family: "Jost", sans-serif;
+                font-size: 11px;
+                font-weight: 400;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                color: #555;
+                background: rgba(255, 255, 255, 0.88);
+                border: 1px solid #e0e0e0;
+                border-radius: 20px;
+                padding: 5px 12px 5px 9px;
+                backdrop-filter: blur(6px);
+                pointer-events: none;
+                transition: opacity 0.4s ease;
+            }
+
+            #lsl-status .dot {
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                flex-shrink: 0;
+                transition: background 0.4s ease;
+            }
+
+            #lsl-status.connecting .dot {
+                background: #f0a500;
+                animation: pulse 1.2s infinite;
+            }
+            #lsl-status.connected .dot {
+                background: #3aaa6e;
+            }
+            #lsl-status.error .dot {
+                background: #e05252;
+            }
+
+            @keyframes pulse {
+                0%,
+                100% {
+                    opacity: 1;
+                }
+                50% {
+                    opacity: 0.3;
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+        <!-- LSL connection status badge -->
+        <div id="lsl-status" class="connecting">
+            <span class="dot"></span>
+            <span id="lsl-status-text">LSL Connecting…</span>
+        </div>
+
+        <!-- jsPsych renders the experiment here -->
+
+        <!-- Experiment logic (includes LSL WebSocket code) -->
+        <script src="experiment.js"></script>
+
+        <!-- Update LSL badge based on window.lslStatus set by experiment.js -->
+        <script>
+            // experiment.js exposes window.lslStatusTarget so we can
+            // reflect the socket state in the badge without coupling HTML to JS internals.
+            function updateLSLBadge(state, label) {
+                const badge = document.getElementById("lsl-status");
+                const text = document.getElementById("lsl-status-text");
+                badge.className = state; // 'connecting' | 'connected' | 'error'
+                text.textContent = label;
+            }
+
+            // Poll the lsl object once experiment.js has loaded it
+            const badgePoller = setInterval(() => {
+                if (typeof lsl === "undefined") return;
+
+                if (lsl.ready) {
+                    updateLSLBadge("connected", "LSL Connected");
+                    clearInterval(badgePoller);
+
+                    // Watch for disconnects after initial connection
+                    const disconnectWatcher = setInterval(() => {
+                        if (!lsl.ready) {
+                            updateLSLBadge("error", "LSL Disconnected");
+                            clearInterval(disconnectWatcher);
+                        }
+                    }, 1000);
+                }
+            }, 200);
+        </script>
+    </body>
+</html>
