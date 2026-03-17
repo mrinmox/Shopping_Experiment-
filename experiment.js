@@ -275,7 +275,7 @@ timeline.push({
 /* ================= PRODUCT IMAGES ================= */
 
 function productImages(type, index) {
-  return [1, 2, 3, 4].map((n) => `images/${type}_${index}_${n}.jpg`);
+  return [1, 2, 3, 4].map((n) => `images/${type}_${index}_${n}.png`);
 }
 
 /* ================= PRODUCT LIST ================= */
