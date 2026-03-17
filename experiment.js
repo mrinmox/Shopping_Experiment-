@@ -2,6 +2,10 @@
   Block Events:
     10 = Block start
 
+  Baseline 2min:
+  5 = Baseline start
+  6 = Baseline end
+
   Stimulus Onset:
     21 = Sustainable product shown
     22 = Unsustainable product shown
@@ -213,6 +217,43 @@ timeline.push({
   on_finish: function (data) {
     participant_id = data.response.participant;
     jsPsych.data.addProperties({ participant_id: participant_id });
+  },
+});
+
+/* ================= BASELINE INSTRUCTION ================= */
+timeline.push({
+  type: jsPsychHtmlButtonResponse,
+  stimulus: `
+    <div style="text-align:center">
+      <p>Baseline recording will begin.</p>
+      <p>Please stay still and focus on the cross.</p>
+    </div>
+  `,
+  choices: ["Start Baseline"],
+});
+
+/* ================= BASELINE (2 MIN) ================= */
+timeline.push({
+  type: jsPsychHtmlKeyboardResponse,
+  stimulus: `
+    <div style="
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      height:80vh;
+      font-size:48px;">
+      +
+    </div>
+  `,
+  choices: "NO_KEYS",
+  trial_duration: 120000,
+
+  on_start: function () {
+    lsl.sendMarker(5); // baseline start
+  },
+
+  on_finish: function () {
+    lsl.sendMarker(6); // baseline end
   },
 });
 
