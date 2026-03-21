@@ -315,6 +315,8 @@ const sustainableProducts = [
   "Recycled Denim Jacket",
   "Hemp Button Shirt",
   "Organic Cotton Jumpsuit",
+];
+/*
   "Bamboo Workout Tank",
   "Sustainable Knit Dress",
   "Hemp Wide Leg Pants",
@@ -360,7 +362,7 @@ const sustainableProducts = [
   "Hemp Lounge Set",
   "Bamboo Everyday Tee",
   "Organic Cotton Summer Dress",
-];
+  */
 
 const unsustainableProducts = [
   "Polyester Party Dress",
@@ -387,7 +389,10 @@ const unsustainableProducts = [
   "Fast Fashion Wrap Dress",
   "Acrylic Crop Sweater",
   "Polyester Bodycon Dress",
-  "Synthetic Leather Shorts",
+];
+
+/*
+ "Synthetic Leather Shorts",
   "Nylon Activewear Top",
   "Polyester Pleated Skirt",
   "Acrylic Turtleneck Sweater",
@@ -437,7 +442,7 @@ const unsustainableProducts = [
   "Acrylic Knit Scarf",
   "Polyester Festival Top",
   "Synthetic Party Gown",
-];
+*/
 
 const items = [];
 
