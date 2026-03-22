@@ -341,7 +341,6 @@ const unsustainableProducts = [
   "Nylon Yoga Pants",
   "Fast Fashion Wrap Dress",
   "Acrylic Crop Sweater",
-  "Polyester Bodycon Dress",
 ];
 
 const items = [];
