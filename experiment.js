@@ -26,7 +26,7 @@
 ================================================== */
 
 /* ================= LSL WEBSOCKET ================= */
-/*
+
 const lsl = {
   socket: null,
   ready: false,
@@ -95,10 +95,8 @@ const lsl = {
   },
 };
 
-*/
-
 /* ================= LSL STUB ================= */
-
+/*
 const lsl = {
   ready: true,
   connect() {
@@ -112,6 +110,7 @@ const lsl = {
     this.ready = false;
   },
 };
+*/
 
 /* ================= PARTICIPANT ================= */
 
@@ -131,7 +130,6 @@ let timeline = [];
 
 /* ================= LSL CONNECT TRIAL ================= */
 
-/*
 function showLSLConnecting() {
   const el = document.querySelector(".jspsych-content");
   if (el)
@@ -199,7 +197,6 @@ timeline.push({
     attempt();
   },
 });
-*/
 
 /* ================= PARTICIPANT FORM ================= */
 
@@ -489,8 +486,6 @@ function createBlock(block_number) {
     };
   }
 
-  /* ---- wrap each trial in a conditional so time-up skips remaining products
-         but DOES NOT skip checkout or feedback                              ---- */
   const productTrials = shuffled.map(function (item) {
     return {
       timeline: [makeProductTrial(item)],
